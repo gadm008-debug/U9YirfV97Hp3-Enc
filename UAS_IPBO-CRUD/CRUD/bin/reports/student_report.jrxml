@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="student_report" pageWidth="595" pageHeight="842" columnWidth="555"
+              leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+
+    <style name="ColumnHeader" mode="Opaque" backcolor="#F0F0F0" >
+        <box padding="2">
+            <pen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="DataCell">
+        <box padding="2">
+            <pen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+
+    <parameter name="ID_AWAL" class="java.lang.Integer"/>
+    <parameter name="ID_AKHIR" class="java.lang.Integer"/>
+
+    <queryString>
+        <![CDATA[SELECT * FROM students WHERE student_id BETWEEN $P{ID_AWAL} AND $P{ID_AKHIR}]]>
+    </queryString>
+
+    <field name="student_id" class="java.lang.Integer"/>
+    <field name="name" class="java.lang.String"/>
+    <field name="email" class="java.lang.String"/>
+
+    <pageHeader>
+        <band height="60">
+            <image>
+                <reportElement x="0" y="0" width="100" height="50"/>
+                <imageExpression><![CDATA["src/reports/ubl-logo.jpg"]]></imageExpression>
+            </image>
+            <staticText>
+                <reportElement x="110" y="10" width="445" height="30"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="18" isBold="true"/>
+                </textElement>
+                <text><![CDATA[LAPORAN DATA MAHASISWA]]></text>
+            </staticText>
+        </band>
+    </pageHeader>
+
+    <columnHeader>
+        <band height="30">
+            <staticText>
+                <reportElement style="ColumnHeader" x="0" y="0" width="100" height="30"/>
+                <text><![CDATA[ID Mahasiswa]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="ColumnHeader" x="100" y="0" width="225" height="30"/>
+                <text><![CDATA[Nama Lengkap]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="ColumnHeader" x="325" y="0" width="230" height="30"/>
+                <text><![CDATA[Email]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="20">
+            <textField>
+                <reportElement style="DataCell" x="0" y="0" width="100" height="20"/>
+                <textElement textAlignment="Center"/> <textFieldExpression><![CDATA[$F{student_id}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement style="DataCell" x="100" y="0" width="225" height="20"/>
+                <textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement style="DataCell" x="325" y="0" width="230" height="20"/>
+                <textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <pageFooter>
+        <band height="30">
+            <textField>
+                <reportElement x="355" y="10" width="100" height="20"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report">
+                <reportElement x="455" y="10" width="100" height="20"/>
+                <textElement textAlignment="Left"/>
+                <textFieldExpression><![CDATA[" of " + $V{PAGE_COUNT}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+
+</jasperReport>
